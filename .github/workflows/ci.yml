@@ -1,15 +1,17 @@
 
-name: Node.js CI
+name: Node.js CI # Name of the workflow, appears in the Actions tab of the GitHub repository.
 
-on:
-  push:
-    branches: 
+on:  # Specifies the triggering events for this workflow.
+  push:  # This workflow will trigger on push events.
+    branches: # Specifies that only pushes to the 'main' branch will trigger this workflow.
       - main
+  workflow_dispatch:  # Allows this workflow to be manually triggered from GitHub's UI.
 
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+jobs: # Defines a collection of jobs that run during the workflow execution.
+  build: # Identifier for this job, which can be any name that is meaningful.
+    runs-on: ubuntu-latest # Specifies that this job runs on the latest version of Ubuntu available.
 
-    steps:
-      - uses: actions/checkout@v2
+    steps: # A sequence of tasks (steps) executed as part of this job.
+      - uses: actions/checkout@v2 # Checks out your repository to the runner, making the code available for subsequent steps.
+      # This action is crucial for any workflow that needs to access the contents of the repository.
