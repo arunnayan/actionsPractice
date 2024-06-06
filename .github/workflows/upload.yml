@@ -18,13 +18,12 @@ jobs:
     - name: Create file directory
       run: mkdir -p upload
 
-    - name: Upload APK from local machine
+    - name: Upload APK from local machine (Placeholder)
       run: |
-        echo "Upload your APK file to the runner"
-        # This step is a placeholder where you will manually upload the file.
-        # For example, using scp from local machine
-        # scp /path/to/local/apk user@runner:/path/to/repo/upload/apk_file.apk
+        echo "Creating a dummy APK file for demonstration"
+        mkdir -p $(dirname upload/${{ github.event.inputs.apk_path }})
         touch upload/${{ github.event.inputs.apk_path }}
+        echo "Dummy content" > upload/${{ github.event.inputs.apk_path }}
 
     - name: Echo contents of upload directory
       run: |
@@ -36,8 +35,8 @@ jobs:
       with:
         name: apk-file
         path: upload/${{ github.event.inputs.apk_path }}
-        
-    - name: Echo contents of upload directory 
+
+    - name: Echo contents of upload directory 2
       run: |
-        echo "Contents of upload directory  --->"
-        ls -l upload    
+        echo "Contents of upload directory: 2"
+        ls -l upload     
