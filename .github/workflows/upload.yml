@@ -39,4 +39,4 @@ jobs:
     - name: Echo contents of upload directory 2
       run: |
         echo "Contents of upload directory: 2"
-        ls -l upload     
+        ls upload     
