@@ -1,29 +1,43 @@
-name: Use APK for Automation Testing
+name: Upload APK File
 
 on:
   workflow_dispatch:
     inputs:
       apk_path:
-        description: 'Path to the APK file in the repository'
+        description: 'Path to the APK file'
         required: true
 
 jobs:
-  test:
+  upload-apk:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set environment variable for APK path
-      run: echo "APK_PATH=${{ github.event.inputs.apk_path }}" >> $GITHUB_ENV
+    - name: Create file directory
+      run: mkdir -p upload
 
-    - name: List files in repository
-      run: ls -l
-
-    - name: Use APK for automation testing
+    - name: Upload APK from local machine
       run: |
-        echo "Running automation tests using the APK at $APK_PATH"
-        # Example command for running tests:
-        # ./gradlew connectedAndroidTest -PapkPath=$APK_PATH
-        ls -l $APK_PATH  # Listing the APK file for demonstration purposes
+        echo "Upload your APK file to the runner"
+        # This step is a placeholder where you will manually upload the file.
+        # For example, using scp from local machine
+        # scp /path/to/local/apk user@runner:/path/to/repo/upload/apk_file.apk
+        touch upload/${{ github.event.inputs.apk_path }}
+
+    - name: Echo contents of upload directory
+      run: |
+        echo "Contents of upload directory:"
+        ls -l upload
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: apk-file
+        path: upload/${{ github.event.inputs.apk_path }}
+        
+    - name: Echo contents of upload directory 
+      run: |
+        echo "Contents of upload directory  --->"
+        ls -l upload    
