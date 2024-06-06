@@ -1,42 +1,33 @@
-name: Upload APK File
+name: Download APK from Another Branch
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
-    inputs:
-      apk_path:
-        description: 'Path to the APK file'
-        required: true
 
 jobs:
-  upload-apk:
+  download_and_test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout main branch
       uses: actions/checkout@v2
-
-    - name: Create file directory
-      run: mkdir -p upload
-
-    - name: Upload APK from local machine (Placeholder)
-      run: |
-        echo "Creating a dummy APK file for demonstration"
-        mkdir -p $(dirname upload/${{ github.event.inputs.apk_path }})
-        touch upload/${{ github.event.inputs.apk_path }}
-        echo "Dummy content" > upload/${{ github.event.inputs.apk_path }}
-
-    - name: Echo contents of upload directory before upload
-      run: |
-        echo "Contents of upload directory before uploading as artifact:"
-        ls -l upload
-
-    - name: Upload APK artifact
-      uses: actions/upload-artifact@v2
       with:
-        name: apk-file
-        path: upload/${{ github.event.inputs.apk_path }}
+        ref: main
 
-    - name: Echo contents of upload directory after upload
+    - name: Checkout APK branch
+      uses: actions/checkout@v2
+      with:
+        ref: dumm  # Replace with the name of the branch where the APK is stored
+        path: apk_branch_files  # This is the directory where the dash branch is checked out
+
+    - name: Copy APK to upload directory
       run: |
-        echo "Contents of upload directory after uploading as artifact:"
+        mkdir -p upload
+        cp apk_branch_files/test.apk upload/  # Make sure this path matches the location of your APK file in the dash branch
+
+    - name: Echo contents of upload directory
+      run: |
+        echo "Contents of upload directory:"
         ls -l upload
