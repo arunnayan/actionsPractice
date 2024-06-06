@@ -25,9 +25,9 @@ jobs:
         touch upload/${{ github.event.inputs.apk_path }}
         echo "Dummy content" > upload/${{ github.event.inputs.apk_path }}
 
-    - name: Echo contents of upload directory
+    - name: Echo contents of upload directory before upload
       run: |
-        echo "Contents of upload directory:"
+        echo "Contents of upload directory before uploading as artifact:"
         ls -l upload
 
     - name: Upload APK artifact
@@ -36,7 +36,7 @@ jobs:
         name: apk-file
         path: upload/${{ github.event.inputs.apk_path }}
 
-    - name: Echo contents of upload directory 2
+    - name: Echo contents of upload directory after upload
       run: |
-        echo "Contents of upload directory: 2"
-        ls upload     
+        echo "Contents of upload directory after uploading as artifact:"
+        ls -l upload
