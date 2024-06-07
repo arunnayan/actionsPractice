@@ -30,4 +30,5 @@ jobs:
     - name: Echo contents of upload directory
       run: |
         echo "Contents of upload directory:"
-        ls -l upload
+        ls upload
+        pwd upload
