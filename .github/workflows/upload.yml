@@ -1,10 +1,11 @@
 name: Download APK from Another Branch
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      apk_file:
+        description: 'Enter the APK filename from the dash branch'
+        required: true
 
 jobs:
   download_and_test:
@@ -22,13 +23,33 @@ jobs:
         ref: dumm  # Replace with the name of the branch where the APK is stored
         path: apk_branch_files  # This is the directory where the dash branch is checked out
 
-    - name: Copy APK to upload directory
+    - name: Verify APK file existence
+      id: verify_apk
+      run: |
+        if [ -f "apk_branch_files/${{ github.event.inputs.apk_file }}" ]; then
+          echo "APK file found: ${{ github.event.inputs.apk_file }}"
+          echo "APK_PATH=$(pwd)/apk_branch_files/${{ github.event.inputs.apk_file }}" >> $GITHUB_ENV
+        else
+          echo "APK file not found: ${{ github.event.inputs.apk_file }}"
+          exit 1
+        fi
+
+    - name: Copy selected APK to upload directory
       run: |
         mkdir -p upload
-        cp apk_branch_files/test.apk upload/  # Make sure this path matches the location of your APK file in the dash branch
+        cp $APK_PATH upload/
 
     - name: Echo contents of upload directory
       run: |
         echo "Contents of upload directory:"
-        ls upload
-        pwd upload
+        ls -l upload
+
+    - name: Use APK for automation testing
+      run: |
+        echo "Running automation tests using the APK"
+        # Here, you would add your automation test commands, using the APK file.
+        # Example command for running tests:
+        # ./gradlew connectedAndroidTest -PapkPath=./upload/${{ github.event.inputs.apk_file }}
+        ls -l upload  # Listing the APK file for demonstration purposes
+      env:
+        APK_PATH: ${{ env.APK_PATH }}
