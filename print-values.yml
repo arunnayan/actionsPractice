@@ -1,8 +1,5 @@
 // printValues.js
 
-// Import required module
-const fs = require('fs');
-
 // Read the environment variables
 const secretValue = process.env.SECRET_VALUE;
 const optionalParam = process.env.OPTIONAL_PARAM;
