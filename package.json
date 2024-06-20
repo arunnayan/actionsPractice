@@ -1,0 +1,12 @@
+{
+  "name": "actions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "printValues.js",
+  "scripts": {
+    "start": "node printValues.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
