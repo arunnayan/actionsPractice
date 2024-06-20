@@ -2,9 +2,9 @@
   "name": "actions",
   "version": "1.0.0",
   "description": "",
-  "main": "../printValues.js",
+  "main": "print-values.js",
   "scripts": {
-    "start": "node ../printValues.js"
+    "start": "node print-values.js"
   },
   "keywords": [],
   "author": "",
