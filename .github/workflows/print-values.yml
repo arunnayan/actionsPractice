@@ -32,4 +32,4 @@ jobs:
         echo "OPTIONAL_PARAM=${{ github.event.inputs.optional_param }}" >> $GITHUB_ENV
 
     - name: Run script
-      run: node printValues.js
+      run: node print-values.js
