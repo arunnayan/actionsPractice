@@ -1,0 +1,27 @@
+name : print workflows values
+
+on:
+  workflow_dispatch:
+    inputs:
+      optional_param:
+        description: 'Optional parameter'
+        required: false
+        default: 'default_value'
+jobs:
+  print_values_job: 
+    runs-on : ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: npm install    
+      - name: Set up environment variables
+        run: |
+          echo "SECRET_VALUE=${{ secrets.SECRET_VALUE }}" >> $GITHUB_ENV
+          echo "OPTIONAL_PARAM=${{ github.event.inputs.optional_param }}" >> $GITHUB_ENV
+      - name: Run script
+        run: npm start    
